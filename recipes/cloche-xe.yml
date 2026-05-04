@@ -58,6 +58,8 @@ modules:
           - io.bassi.Amberol
           - org.localsend.localsend_app
           #- org.mozilla.firefox
+          - io.podman_desktop.PodmanDesktop
+          - net.nokyan.Resources
 
   - type: systemd
     system:

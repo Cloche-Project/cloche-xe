@@ -67,6 +67,8 @@ modules:
           - org.localsend.localsend_app
           - org.gnome.Calculator
           - org.gnome.Loupe
+          - io.podman_desktop.PodmanDesktop
+          - net.nokyan.Resources
 
   - type: systemd
     system:
