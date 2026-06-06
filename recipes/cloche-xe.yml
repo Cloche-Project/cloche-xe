@@ -68,8 +68,8 @@ modules:
       # DO NOT mask services here (Bazzite needs them for gamemode/updates)
       masked:
         - plymouth-quit-wait.service # Optional: Speeds up boot visually
-      disabled:
-        - bazzite-user-setup.service
+#      disabled:
+#        - bazzite-user-setup.service
 
   - type: script
     scripts:
