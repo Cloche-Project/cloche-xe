@@ -1,14 +1,14 @@
 name: cloche-xe-deck
 description: Workstation Extended Deck Edition
 base-image: ghcr.io/ublue-os/bazzite-deck
-image-version: 43 #stable
+image-version: 44 #stable
 
 modules:
   - type: os-release
     properties:
       ID: cloche-xe-deck
       NAME: Cloche Xe Deck
-      PRETTY_NAME: Cloche Xe 43 (Felt)
+      PRETTY_NAME: Cloche Xe 44 (Piledriver)
       HOME_URL: https://github.com/augustofmarques/gnx
       BUG_REPORT_URL: https://github.com/augustofmarques/gnx/issues
       SUPPORT_URL: https://github.com/augustofmarques/gnx
