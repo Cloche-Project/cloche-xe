@@ -1,7 +1,7 @@
 name: cloche-xe
 description: Workstation Extended
 base-image: ghcr.io/ublue-os/bazzite
-image-version: 44 #stable, Bazzite doesn't use latest.
+image-version: stable-44 #stable, Bazzite doesn't use latest.
 
 modules:
   - type: os-release

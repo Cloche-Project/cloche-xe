@@ -1,7 +1,7 @@
 name: cloche-xe-deck-gnome
 description: Workstation Extended Deck Edition
 base-image: ghcr.io/ublue-os/bazzite-deck-gnome
-image-version: 44 #stable
+image-version: stable-44 #stable
 
 modules:
   - type: os-release
