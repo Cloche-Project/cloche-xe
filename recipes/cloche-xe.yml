@@ -14,10 +14,10 @@ modules:
       SUPPORT_URL: https://github.com/augustofmarques/gnx
       DEFAULT_HOSTNAME: cloche-xe
 
-  - type: rpm-ostree
-    install:
-      - firefox
-      - firefox-langpacks
+  #- type: rpm-ostree
+  #  install:
+  #    - firefox
+  #    - firefox-langpacks
 
   - type: script
     scripts:
