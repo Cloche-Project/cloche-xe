@@ -34,10 +34,14 @@ modules:
       - source: gnome
         destination: /
 
+  - type: justfiles
+
   - type: dnf
     install:
       packages:
         - plymouth-plugin-script
+        - ghostty
+        - cargo
 
   - type: kargs
     kargs:

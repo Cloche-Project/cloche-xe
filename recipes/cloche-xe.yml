@@ -32,10 +32,14 @@ modules:
       - source: kde
         destination: /
 
+  - type: justfiles
+
   - type: dnf
     install:
       packages:
         - plymouth-plugin-script
+        - ghostty
+        - cargo
 
   - type: kargs
     kargs:
