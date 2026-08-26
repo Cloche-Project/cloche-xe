@@ -8,4 +8,6 @@ rpm-ostree install -y \
     zsh \
     btop \
     tailscale \
-    newt
+    newt \
+    lorax \
+    xorriso
