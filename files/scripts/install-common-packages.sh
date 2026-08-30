@@ -11,3 +11,5 @@ rpm-ostree install -y \
     newt \
     lorax \
     xorriso
+
+curl -sS https://starship.rs/install.sh | sh -s -- --yes
