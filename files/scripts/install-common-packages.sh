@@ -12,4 +12,4 @@ rpm-ostree install -y \
     lorax \
     xorriso
 
-curl -sS https://starship.rs/install.sh | sh -s -- --yes
+curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir /usr/bin
