@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# cloche-rpm.repo is laid down by the "files" module (source: common), which
+# runs before this script, so the repo is available here.
+rpm-ostree install -y cloche-gnome-defaults
+
 # Set boot animation
 plymouth-set-default-theme spinner
 
