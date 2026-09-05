@@ -1,9 +1,0 @@
-[Daemon]
-Autolock=true
-LockGrace=900
-LockOnResume=true
-Timeout=30
-
-[Greeter][Wallpaper][org.kde.image][General]
-Image=/home/augusto/Documents/GitHub/gnx/files/system/usr/share/wallpapers/Towers/contents/images-dark/4096x2160.png
-PreviewImage=/home/augusto/Documents/GitHub/gnx/files/system/usr/share/wallpapers/Towers/contents/images-dark/4096x2160.png

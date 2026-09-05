@@ -68,8 +68,6 @@ modules:
           - com.mattjakeman.ExtensionManager
           #- dev.zed.Zed
           - io.gitlab.librewolf-community
-          - io.bassi.Amberol
-          - org.localsend.localsend_app
           - org.gnome.Calculator
           - org.gnome.Loupe
           - io.podman_desktop.PodmanDesktop

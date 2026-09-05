@@ -65,10 +65,7 @@ modules:
           - org.localsend.localsend_app
           #- org.mozilla.firefox
           - com.mattjakeman.ExtensionManager
-          - com.vscodium.codium
           - io.gitlab.librewolf-community
-          - io.bassi.Amberol
-          - org.localsend.localsend_app
           - org.gnome.Calculator
           - org.gnome.Loupe
           - io.podman_desktop.PodmanDesktop
