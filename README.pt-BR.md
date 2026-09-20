@@ -1,104 +1,104 @@
 *[Read in English](README.md)*
 
-# Cloche OS
+<p align="center">
+  <picture>
+    <img src="cloche-logo/watermark.png" alt="Cloche OS Logo" height="80" />
+  </picture>
+</p>
 
-**Imagem de desktop pessoal imutável baseada no Fedora Atomic.**
+<p align="center">
+    <strong>Workstation de Performance & Gaming</strong>
+</p>
 
-O Cloche é uma imagem OCI customizada construída usando o framework BlueBuild. Ele foi projetado para ser um "daily driver" confiável que segue um modelo de configuração declarativa, permitindo um ambiente de trabalho estável, reprodutível e com deploys rápidos.
+<p align="center">
+  <strong>Cloche Xe</strong> é uma série de imagens de desktop imutáveis e container-native construídas sobre o Bazzite, voltadas a uma workstation focada em performance e gaming — incluindo uma variante otimizada para o Steam Deck.
+</p>
 
-## Arquitetura Técnica
+<p align="center">
+  <a href="https://github.com/cloche-project/cloche-xe/actions/workflows/build.yml">
+    <img src="https://github.com/cloche-project/cloche-xe/actions/workflows/build.yml/badge.svg" alt="Build Status" />
+  </a>
+  <a href="https://ghcr.io/cloche-project/cloche-xe">
+    <img src="https://img.shields.io/badge/registry-GHCR-blue?logo=github" alt="GHCR Registry" />
+  </a>
+  <img src="https://img.shields.io/github/license/cloche-project/cloche-xe" alt="License" />
+</p>
 
-  - **Base:** Fedora / Universal Blue (ublue-os).
+> [!NOTE]
+> **O Cloche Xe herda do [Bazzite](https://github.com/ublue-os/bazzite), e não da Base Headless do Cloche.** Ele aplica os mesmos padrões de desktop do Cloche (`cloche-gnome-defaults`/`cloche-kde-defaults`, vindos do [`rpm-repo`](https://github.com/cloche-project/rpm-repo)) sobre a stack de gaming/performance do Bazzite, em vez de construir o desktop do zero como faz o `cloche-standard`.
 
-  - **Atômico/Imutável:** rpm-ostree para atualizações atômicas e rollbacks.
+---
 
-  - **Sistema de Build:** GitHub Actions para automação de camadas de imagem.
+## Variantes Disponíveis
 
-  - **Configuração:** Gerenciado via receitas YAML, definindo pacotes do sistema, flatpaks e scripts customizados.
+| Nome da Imagem | Ambiente Desktop | Caso de Uso |
+|------------|---------------------|-----------------|
+| `cloche-xe` | KDE Plasma | Workstation focada em performance/gaming |
+| `cloche-xe-gnome` | GNOME (nativo Wayland) | Workstation focada em performance/gaming |
+| `cloche-xe-deck` | KDE Plasma | Otimizado para Steam Deck |
+| `cloche-xe-deck-gnome` | GNOME | Otimizado para Steam Deck |
 
-## Principais Recursos
+---
 
-  - **Setup Declarativo:** Todo o estado do sistema é definido neste repositório.
+## Arquitetura do Desktop
 
-  - **Integração CI/CD:** Builds automatizados disparados por alterações na configuração.
+| Componente | Detalhes |
+|-----------|---------|
+| **Camada Base** | Bazzite (`ghcr.io/ublue-os/bazzite[-gnome\|-deck\|-deck-gnome]`), acompanhando o canal `stable`/`testing` — o Bazzite não usa uma tag `latest` contínua |
+| **Instalação de Pacotes** | Módulo `script` (`install-*-packages.sh`, `setup-cloche-xe*.sh`) instalando `cloche-gnome-defaults`/`cloche-kde-defaults` do `rpm-repo` do Cloche, os mesmos RPMs usados pelo `cloche-standard` |
+| **Entrega de Apps** | Flatpak, com um conjunto padrão de apps pré-instalados no nível do sistema |
+| **Suporte a Hardware** | Herda a stack de drivers e ajustes de performance voltados a gaming do Bazzite |
 
-  - **Gerenciamento Híbrido de Pacotes:** Camadas centrais do sistema via rpm-ostree e sandboxing de aplicações via Flatpak.
+---
 
-  - **Padrões Otimizados:** Ferramentas pré-configuradas para gerenciamento de infraestrutura e desenvolvimento.
+## Principais Recursos do Desktop
 
-  - **Batteries included:** Como é o padrão das imagens ublue.
+* **Padrões de Desktop Compartilhados:** Temas GNOME/Plasma, papéis de parede e configuração do shell vêm dos mesmos RPMs `cloche-*-defaults` usados pelo `cloche-standard`, mantendo a experiência de desktop consistente em toda a família Cloche.
+* **Base Pronta para Gaming:** Construído sobre o Bazzite, então gamemode, suporte a controles e gerenciamento de drivers de GPU já vêm ajustados de fábrica.
+* **Flatpaks Selecionados:** Vem com um conjunto padrão de apps (VSCodium, Podman Desktop, Amberol, LocalSend, Resources, entre outros) via `default-flatpaks`, com um conjunto focado em Blender/Gear Lever na variante Deck.
+* **Variante Steam Deck:** `cloche-xe-deck`/`cloche-xe-deck-gnome` são construídas sobre as próprias imagens Deck do Bazzite, voltadas ao formato portátil.
 
-  - **Workflows Conteinerizados:** Inclui Distrobox e Docker out-of-the-box.
+---
 
-## Imagens Disponíveis
+## Implantação & Instalação
 
-Este projeto mantém múltiplas variações de imagem para suportar diferentes configurações de hardware e ambientes de desktop (KDE Plasma e GNOME).
+### Rebase Remoto
 
-| Nome da Imagem | Ambiente Desktop | Alvo / Caso de Uso |
-| :--- | :--- | :--- |
-| **cloche-standard** | KDE Plasma | Workstation de uso geral |
-| **cloche-standard-gnome** | GNOME | Workstation de uso geral |
-| **cloche-xe** | KDE Plasma | Workstation / Foco em Performance e Gaming |
-| **cloche-xe-gnome** | GNOME | Workstation / Foco em Performance e Gaming |
-| **cloche-xe-deck** | KDE Plasma | Otimizado para Steam Deck |
-| **cloche-xe-deck-gnome** | GNOME | Otimizado para Steam Deck |
+Para migrar uma workstation Fedora Atomic existente para o Cloche Xe, escolha sua variante preferida e execute:
 
-## Modelo de Branch
+```bash
+# Exemplo: rebase para a variante Plasma
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/cloche-project/cloche-xe:latest
 
-- **main/latest**: Builds estáveis, testados e prontos para uso diário.
+# Ou para a variante GNOME
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/cloche-project/cloche-xe-gnome:latest
+```
 
-- **beta/testing**: Branch de testes para novas versões upstream, recursos experimentais e receitas em teste.
+### Aplique as camadas de desktop reiniciando o sistema:
 
-## Instalação
-
-### CUIDADO!
-
-***Esta é uma configuração pessoal. Faça o rebase por sua conta e risco.***
-
-Para fazer o rebase de uma instalação Fedora Atomic existente para o Cloche, substitua `<IMAGE_NAME>` pela sua imagem preferida da tabela acima, e `<TAG>` por `latest` (main) ou `testing` (beta).
-
-Rebase para o registry não verificado:
-
-~~~bash
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/augustofmarques/<IMAGE_NAME>:<TAG>
-~~~
-
-Exemplo para a imagem KDE Standard na branch estável:
-
-~~~bash
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/augustofmarques/cloche-standard:latest
-~~~
-
-Reinicie para aplicar as alterações:
-~~~bash
+```bash
 systemctl reboot
-~~~ 
+```
 
-**Opcional:** Verificar e fazer rebase para a imagem assinada:
-Uma vez que a chave pública esteja configurada, você pode mudar para a imagem assinada para maior segurança.
+### Passos Recomendados Pós-Instalação
 
-## Geração Local de ISO
+* **Verificar Camadas:** Rode `rpm-ostree status` para garantir que a base e os overrides locais estão de acordo com o esperado.
+* **Configurar Flatpaks:** Os remotes do Flatpak já vêm configurados no nível do sistema; apps de usuário podem ser adicionados sem privilégios de root via Central de Software ou CLI.
 
-Você também pode gerar uma ISO bootável localmente usando a CLI do `bluebuild`. 
+---
 
-Execute o comando a seguir, substituindo o nome de saída e a imagem/tag alvo:
+## Verificação & Segurança
 
-~~~bash
-sudo bluebuild generate-iso --iso-name <OUTPUT_NAME>.iso image ghcr.io/augustofmarques/<IMAGE_NAME>:<TAG>
-~~~
+Todo build de imagem de desktop é assinado via Sigstore Cosign contra a chave pública de verificação do repositório.
 
-**Exemplo:** Gerando uma ISO para a imagem GNOME Steam Deck na branch beta:
-~~~bash
-sudo bluebuild generate-iso --iso-name cloche-deck-gnome.iso image ghcr.io/augustofmarques/cloche-xe-deck-gnome:testing
-~~~
+```bash
+# Verificar a camada da variante de desktop específica
+cosign verify --key cosign.pub ghcr.io/cloche-project/cloche-xe:latest
+```
 
-> ***Nota:*** Verifique a seção de pacotes (packages) deste repositório para encontrar os nomes e tags das imagens para cada branch (como a beta).<br>
-Se os comandos de build de imagens ou ISOs forem executados sem a definição de tag, o comando utilizará por padrão a imagem mais recente (latest) da branch main.
+## Licença & Agradecimentos
 
-## Objetivo do Projeto
-
-O propósito do Cloche é eliminar as etapas manuais de pós-instalação. Ao tratar a estação de trabalho como um ativo imutável, garanto que meu ambiente seja consistente em diferentes máquinas e fácil de recuperar rapidamente em caso de falha de hardware.
-
-## Aviso
-
-Este é um projeto pessoal desenvolvido para fins educacionais e de hobby. Embora eu o utilize como meu sistema principal diário, ele é fornecido "como está" (as-is), sem quaisquer garantias. Use por sua conta e risco.
+* Licenciado sob Apache 2.0
+* Construído sobre a imagem [Bazzite](https://github.com/ublue-os/bazzite) da Universal Blue
+* Compartilha os padrões de desktop com o `cloche-project/cloche-standard` via `cloche-project/rpm-repo`
+* Powered by o framework BlueBuild e os engines do projeto Universal Blue
