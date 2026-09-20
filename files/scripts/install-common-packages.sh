@@ -10,6 +10,8 @@ rpm-ostree install -y \
     tailscale \
     newt \
     lorax \
-    xorriso
+    xorriso \
+    spice-vdagent \
+    qemu-guest-agent
 
 curl -sS https://starship.rs/install.sh | sh -s -- --yes --bin-dir /usr/bin
