@@ -1,15 +1,17 @@
 #!/bin/bash
 set -eoux pipefail
 
-# bazzite ships steamdeck-kde-presets-desktop, which owns /etc/xdg/kdeglobals
-# and /etc/xdg/kscreenlockerrc — the same files cloche-kde-defaults ships.
+# bazzite ships a steamdeck-kde-presets* package that owns /etc/xdg/kdeglobals
+# and /etc/xdg/kscreenlockerrc — the same files cloche-kde-defaults ships. The
+# exact package name differs across bazzite variants (steamdeck-kde-presets on
+# bazzite-deck, steamdeck-kde-presets-desktop on plain bazzite), so resolve it
+# from the conflicting file itself instead of hardcoding a name.
 # --force-replacefiles doesn't cover this (it only arbitrates between packages
 # in the same transaction, not files already committed in the base image), so
 # the conflicting package has to go before cloche-kde-defaults can install.
-# bazzite-deck doesn't carry this package under the same name, so only remove
-# it when actually present.
-if rpm -q steamdeck-kde-presets-desktop &>/dev/null; then
-    rpm-ostree override remove steamdeck-kde-presets-desktop
+conflicting_pkg=$(rpm -qf /etc/xdg/kdeglobals --qf '%{NAME}\n' 2>/dev/null || true)
+if [ -n "$conflicting_pkg" ]; then
+    rpm-ostree override remove "$conflicting_pkg"
 fi
 
 # cloche-rpm.repo is laid down by the "files" module (source: common), which
