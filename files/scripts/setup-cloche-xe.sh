@@ -1,12 +1,15 @@
 #!/bin/bash
 set -eoux pipefail
 
-# Bazzite ships steamdeck-kde-presets-desktop, which owns /etc/xdg/kdeglobals
+# bazzite ships steamdeck-kde-presets-desktop, which owns /etc/xdg/kdeglobals
 # and /etc/xdg/kscreenlockerrc — the same files cloche-kde-defaults ships.
 # --force-replacefiles doesn't cover this (it only arbitrates between packages
 # in the same transaction, not files already committed in the base image), so
 # the conflicting package has to go before cloche-kde-defaults can install.
-rpm-ostree override remove steamdeck-kde-presets-desktop
+# Guarded since not every bazzite variant carries it under the same name.
+if rpm -q steamdeck-kde-presets-desktop &>/dev/null; then
+    rpm-ostree override remove steamdeck-kde-presets-desktop
+fi
 
 # cloche-rpm.repo is laid down by the "files" module (source: common), which
 # runs before this script, so the repo is available here.
